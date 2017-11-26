@@ -105,7 +105,9 @@ class App extends Component<
                 });
               }
             }}>
-            <span role="img">⏪</span>
+            <span aria-label="Back" role="img">
+              ⏪
+            </span>
           </div>
         )}
         <div className="Container">
@@ -123,7 +125,7 @@ class App extends Component<
                         primarySelection === item ? undefined : item,
                     });
                   }}>
-                  <img src={item.image} />
+                  <img alt={item.text} src={item.image} />
                   <span>{item.text}</span>
                 </div>
               ))}
@@ -149,7 +151,7 @@ class App extends Component<
                         });
                         // argh
                       }}>
-                      <img src={item.image} />
+                      <img alt={item.text} src={item.image} />
                       <span>{item.text}</span>
                     </div>
                   ))}
@@ -182,9 +184,14 @@ class App extends Component<
                       //   alert(url);
                       // });
                     }}>
-                    💬
+                    <span role="img" aria-label="Speak">
+                      💬
+                    </span>
                   </button>
-                  <img src={secondarySelection.image} />
+                  <img
+                    alt={secondarySelection.text}
+                    src={secondarySelection.image}
+                  />
                 </p>
               </div>
             )}
