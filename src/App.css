@@ -23,6 +23,16 @@ body {
   padding: 20px;
   font-size: 2em;
 }
+.Container > div > p > button {
+  margin-top: 10px;
+  padding-top: 10px;
+  border: 0;
+  font-size: 2em;
+  background: #333;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
 
 .App--item {
   border: 1px solid #333;

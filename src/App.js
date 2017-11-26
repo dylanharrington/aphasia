@@ -163,33 +163,34 @@ class App extends Component<
             </div>
           )}
 
-          {primarySelection != null && (
-            <div>
-              <p>
-                {primarySelection.text} {secondaryText}
-                <button
-                  type="button"
-                  onClick={() => {
-                    const synth = window.speechSynthesis;
-                    const utterThis = new SpeechSynthesisUtterance(
-                      `${primarySelection.text} ${secondaryText}`,
-                    );
-                    // utterThis.voice = synth
-                    //   .getVoices()
-                    //   .find(
-                    //     item => item.voiceURI === 'Google UK English Female',
-                    //   );
-                    synth.speak(utterThis);
+          {primarySelection != null &&
+            secondaryText != null && (
+              <div>
+                <p>
+                  {primarySelection.text} {secondaryText}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const synth = window.speechSynthesis;
+                      const utterThis = new SpeechSynthesisUtterance(
+                        `${primarySelection.text} ${secondaryText}`,
+                      );
+                      // utterThis.voice = synth
+                      //   .getVoices()
+                      //   .find(
+                      //     item => item.voiceURI === 'Google UK English Female',
+                      //   );
+                      synth.speak(utterThis);
 
-                    // googleTTS('Hello World', 'en', 1).then(function(url) {
-                    //   alert(url);
-                    // });
-                  }}>
-                  Say it
-                </button>
-              </p>
-            </div>
-          )}
+                      // googleTTS('Hello World', 'en', 1).then(function(url) {
+                      //   alert(url);
+                      // });
+                    }}>
+                    💬
+                  </button>
+                </p>
+              </div>
+            )}
         </div>
       </div>
     );
