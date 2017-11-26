@@ -97,10 +97,6 @@ const primaryList = [
     allows: [secondaryList.drink],
   },
   {
-    text: 'I want to wear',
-    allows: [secondaryList.clothing],
-  },
-  {
     text: 'I want to eat',
     allows: [secondaryList.food],
   },
