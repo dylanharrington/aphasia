@@ -71,7 +71,7 @@ const primaryList = [
   },
   {
     image: secondaryList.people[0].image,
-    text: '',
+    text: 'People',
     allows: [secondaryList.people],
   },
 ];
@@ -88,52 +88,73 @@ class App extends Component<
   };
   render() {
     const {primarySelection, secondarySelection} = this.state;
+
     return (
       <div className="App">
-        <div className="Container">
-          <div>
-            {primaryList.map(item => (
-              <div
-                className={cx('App--item', {
-                  selected: primarySelection === item,
-                })}
-                onClick={() => {
-                  this.setState({
-                    secondarySelection: undefined,
-                    primarySelection:
-                      primarySelection === item ? undefined : item,
-                  });
-                }}>
-                <img src={item.image} />
-                <span>{item.text}</span>
-              </div>
-            ))}
+        {primarySelection != null && (
+          <div
+            className="App--top"
+            onClick={() => {
+              if (secondarySelection != null) {
+                this.setState({
+                  secondarySelection: undefined,
+                });
+              } else {
+                this.setState({
+                  primarySelection: undefined,
+                });
+              }
+            }}>
+            <span role="img">⏪</span>
           </div>
-
-          {primarySelection != null && (
+        )}
+        <div className="Container">
+          {primarySelection == null && (
             <div>
-              {primarySelection.allows
-                .reduce((accum, curr) => {
-                  return [...accum, ...curr];
-                }, [])
-                .map(item => (
-                  <div
-                    className={cx('App--item', {
-                      selected: secondarySelection === item,
-                    })}
-                    onClick={() => {
-                      this.setState({
-                        secondarySelection:
-                          secondarySelection === item ? undefined : item,
-                      });
-                      // argh
-                    }}>
-                    <img src={item.image} />
-                    <span>{item.text}</span>
-                  </div>
-                ))}
+              {primaryList.map(item => (
+                <div
+                  className={cx('App--item', {
+                    selected: primarySelection === item,
+                  })}
+                  onClick={() => {
+                    this.setState({
+                      secondarySelection: undefined,
+                      primarySelection:
+                        primarySelection === item ? undefined : item,
+                    });
+                  }}>
+                  <img src={item.image} />
+                  <span>{item.text}</span>
+                </div>
+              ))}
             </div>
           )}
+
+          {primarySelection != null &&
+            secondarySelection == null && (
+              <div>
+                {primarySelection.allows
+                  .reduce((accum, curr) => {
+                    return [...accum, ...curr];
+                  }, [])
+                  .map(item => (
+                    <div
+                      className={cx('App--item', {
+                        selected: secondarySelection === item,
+                      })}
+                      onClick={() => {
+                        this.setState({
+                          secondarySelection:
+                            secondarySelection === item ? undefined : item,
+                        });
+                        // argh
+                      }}>
+                      <img src={item.image} />
+                      <span>{item.text}</span>
+                    </div>
+                  ))}
+              </div>
+            )}
 
           {primarySelection != null &&
             secondarySelection != null && (
@@ -163,7 +184,7 @@ class App extends Component<
                     }}>
                     💬
                   </button>
-                  <img width="100%" src={secondarySelection.image} />
+                  <img src={secondarySelection.image} />
                 </p>
               </div>
             )}
