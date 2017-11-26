@@ -1,15 +1,7 @@
 body {
   background: #222;
   color: white;
-  font-size: 1.5vw;
-}
-
-body h1 {
-  position: absolute;
-  text-align: center;
-  left: 0;
-  right: 0;
-  top: 0;
+  font-size: 1.5em;
 }
 
 .App {
@@ -17,15 +9,18 @@ body h1 {
 }
 
 .Container {
-  padding: 120px;
+  margin-top: 20px;
 }
 
 .Container > div {
-  min-width: 40%;
+  width: 33%;
   vertical-align: top;
   display: inline-block;
 }
 
+.Container > div > p{
+  padding: 20px;
+}
 
 .App--item {
   border: 1px solid #333;

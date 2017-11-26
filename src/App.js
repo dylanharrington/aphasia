@@ -41,20 +41,7 @@ const secondaryList = {
     'Action',
     'Drama',
   ],
-  people: [
-    'Brenda',
-    'Diane',
-    'Dylan',
-    'Harlan',
-    'Holly',
-    'Jimbo',
-    'Jimmy',
-    'Kim',
-    'Larry',
-    'Rex',
-    'Shali',
-    'Vicky',
-  ],
+  people: ['Dylan', 'Harlan', 'Holly', 'Kim', 'Larry', 'Shali'],
   feelings: ['happy 😄', 'sad ☹️', 'sleepy😴', 'hungry 🍱'],
   clothing: ['shirt', 'pants', 'underwear', 'socks'],
   food: [
@@ -65,8 +52,6 @@ const secondaryList = {
     'bananas',
     'salad',
     'vegetables',
-    'salt',
-    'pepper',
     'dessert',
     'eggs',
   ],
@@ -81,16 +66,12 @@ const secondaryList = {
 };
 const primaryList = [
   {
-    text: 'Common',
+    text: '*',
     allows: [secondaryList.common],
   },
   {
     text: 'I am',
     allows: [secondaryList.feelings],
-  },
-  {
-    text: 'Where is',
-    allows: [secondaryList.people, secondaryList.stuff],
   },
   {
     text: 'I want to drink',
@@ -113,8 +94,8 @@ const primaryList = [
     allows: [secondaryList.music],
   },
   {
-    text: "I don't want",
-    allows: [secondaryList.food],
+    text: 'Get me my',
+    allows: [secondaryList.stuff],
   },
   {
     text: 'I feel pain on my',
@@ -136,11 +117,6 @@ class App extends Component<
     const {primarySelection, secondaryText} = this.state;
     return (
       <div className="App">
-        {primarySelection != null && (
-          <h1>
-            {primarySelection.text} {secondaryText}
-          </h1>
-        )}
         <div className="Container">
           <div>
             {primaryList.map(item => (
@@ -181,6 +157,14 @@ class App extends Component<
                     {item}
                   </div>
                 ))}
+            </div>
+          )}
+
+          {primarySelection != null && (
+            <div>
+              <p>
+                {primarySelection.text} {secondaryText}
+              </p>
             </div>
           )}
         </div>
