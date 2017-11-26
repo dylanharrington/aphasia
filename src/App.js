@@ -24,7 +24,7 @@ const secondaryList = {
     'it quiet',
   ],
 
-  stuff: ['my phone', 'my iPad', 'my glasses'],
+  stuff: ['phone', 'iPad', 'glasses'],
 
   music: ['Moody Blues', 'The Beatles'],
 
