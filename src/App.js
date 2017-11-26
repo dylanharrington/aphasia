@@ -10,21 +10,19 @@ const secondaryList = {
   activities: [
     'to go for a walk',
     'to go to the bathroom',
+    'to have a bath',
     'to go for a drive',
     'a nap',
-    'to call',
-    'to watch TV',
     'a massage',
-    'to listen music',
-    'to look at picture',
-    'brush my hair',
+    'to look at pictures',
+    'new clothes',
     'to go to my chair',
     'to go to the couch',
     'to go to the bed',
     'it quiet',
   ],
 
-  stuff: ['phone', 'iPad', 'glasses'],
+  stuff: ['phone', 'iPad', 'glasses', 'blanket', 'pillow'],
 
   music: ['Moody Blues', 'The Beatles'],
 
@@ -35,8 +33,8 @@ const secondaryList = {
     'Days of Our Lives',
     'Turner Classic Movies',
     'Christmas Movie',
-    'A game show',
-    'Romance Movie',
+    'a game show',
+    'Romance',
     'Comedy',
     'Action',
     'Drama',
@@ -72,6 +70,10 @@ const primaryList = [
   {
     text: 'I am',
     allows: [secondaryList.feelings],
+  },
+  {
+    text: 'I want',
+    allows: [secondaryList.activities],
   },
   {
     text: 'I want to drink',
