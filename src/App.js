@@ -175,11 +175,14 @@ class App extends Component<
                       const utterThis = new SpeechSynthesisUtterance(
                         `${primarySelection.text} ${secondaryText}`,
                       );
-                      // utterThis.voice = synth
-                      //   .getVoices()
-                      //   .find(
-                      //     item => item.voiceURI === 'Google UK English Female',
-                      //   );
+                      const coolVoice = synth
+                        .getVoices()
+                        .find(
+                          item => item.voiceURI === 'Google UK English Female',
+                        );
+                      if (coolVoice != null) {
+                        utterThis.voice = coolVoice;
+                      }
                       synth.speak(utterThis);
 
                       // googleTTS('Hello World', 'en', 1).then(function(url) {
