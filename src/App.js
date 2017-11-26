@@ -5,6 +5,7 @@ import './App.css';
 import cx from 'classnames';
 
 const secondaryList = {
+  common: ['Yes', 'No', 'Thank you', 'I love you', 'Good night'],
   body: ['leg', 'head', 'ear', 'face', 'arm'],
   activities: [
     'to go for a walk',
@@ -40,7 +41,6 @@ const secondaryList = {
     'Action',
     'Drama',
   ],
-
   people: [
     'Brenda',
     'Diane',
@@ -55,8 +55,7 @@ const secondaryList = {
     'Shali',
     'Vicky',
   ],
-
-  feelings: ['happy 😄', 'sad ☹️', 'sleepy', 'hungry'],
+  feelings: ['happy 😄', 'sad ☹️', 'sleepy😴', 'hungry 🍱'],
   clothing: ['shirt', 'pants', 'underwear', 'socks'],
   food: [
     'tuna',
@@ -80,16 +79,30 @@ const secondaryList = {
     'coffee',
   ],
 };
-
 const primaryList = [
   {
-    text: 'I want',
-    allows: [
-      secondaryList.drink,
-      secondaryList.stuff,
-      secondaryList.food,
-      secondaryList.clothing,
-    ],
+    text: 'Common',
+    allows: [secondaryList.common],
+  },
+  {
+    text: 'I am',
+    allows: [secondaryList.feelings],
+  },
+  {
+    text: 'Where is',
+    allows: [secondaryList.people, secondaryList.stuff],
+  },
+  {
+    text: 'I want to drink',
+    allows: [secondaryList.drink],
+  },
+  {
+    text: 'I want to wear',
+    allows: [secondaryList.clothing],
+  },
+  {
+    text: 'I want to eat',
+    allows: [secondaryList.food],
   },
   {
     text: 'I want to talk to',
@@ -108,19 +121,10 @@ const primaryList = [
     allows: [secondaryList.food],
   },
   {
-    text: 'I am',
-    allows: [secondaryList.feelings],
-  },
-  {
-    text: 'Where is',
-    allows: [secondaryList.people, secondaryList.stuff],
-  },
-  {
     text: 'I feel pain on my',
     allows: [secondaryList.body],
   },
 ];
-
 class App extends Component<
   {},
   {
@@ -132,10 +136,8 @@ class App extends Component<
     primarySelection: undefined,
     secondaryText: undefined,
   };
-
   render() {
     const {primarySelection, secondaryText} = this.state;
-
     return (
       <div className="App">
         {primarySelection != null && (
