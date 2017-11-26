@@ -24,7 +24,7 @@ body {
   font-size: 2em;
 }
 .Container > div > p > button {
-  margin-top: 10px;
+  margin: 10px 0;
   padding-top: 10px;
   border: 0;
   font-size: 2em;
@@ -35,11 +35,24 @@ body {
 }
 
 .App--item {
+  position: relative;
   border: 1px solid #333;
   cursor: pointer;
-  line-height: 2em;
+  line-height: 42px;
   padding: 12px;
   margin: 8px;
+}
+
+
+.App--item > img {
+  position: absolute;
+  width: 66px;
+  left: 0;
+  top: 0;
+}
+
+.App--item > img + span{
+  margin-left: 76px;
 }
 
 .selected {
