@@ -19,6 +19,7 @@ body {
 }
 
 .Container > div > p{
+  position: fixed;
   padding: 20px;
   font-size: 2em;
 }
