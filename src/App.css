@@ -1,7 +1,7 @@
 body {
   background: #222;
   color: white;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .App {
@@ -20,6 +20,7 @@ body {
 
 .Container > div > p{
   padding: 20px;
+  font-size: 2em;
 }
 
 .App--item {
