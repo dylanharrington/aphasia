@@ -13,15 +13,13 @@ body {
 }
 
 .Container > div {
-  width: 33%;
-  vertical-align: top;
-  display: inline-block;
+  width: 100%;
 }
 
 .Container > div > p{
-  position: fixed;
   padding: 20px;
   font-size: 2em;
+  text-align: center;
 }
 .Container > div > p > button {
   margin: 10px 0;
@@ -34,7 +32,16 @@ body {
   text-align: center;
 }
 
+.App--top {
+  cursor: pointer;
+  font-size: 2em;
+  padding: 12px;
+  line-height: 42px;
+}
+
 .App--item {
+  display: inline-block;
+  text-align: center;
   position: relative;
   border: 1px solid #333;
   cursor: pointer;
@@ -45,14 +52,15 @@ body {
 
 
 .App--item > img {
-  position: absolute;
-  width: 66px;
-  left: 0;
-  top: 0;
+  /* position: absolute; */
+  width: 100px;
+  /* left: 0; */
+  /* top: 0; */
 }
 
 .App--item > img + span{
-  margin-left: 76px;
+  display: block;
+  /* margin-left: 76px; */
 }
 
 .selected {
