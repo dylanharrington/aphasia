@@ -1,5 +1,6 @@
 // @flow
 import React, {Component} from 'react';
+
 import './App.css';
 
 import cx from 'classnames';
@@ -166,6 +167,26 @@ class App extends Component<
             <div>
               <p>
                 {primarySelection.text} {secondaryText}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const synth = window.speechSynthesis;
+                    const utterThis = new SpeechSynthesisUtterance(
+                      `${primarySelection.text} ${secondaryText}`,
+                    );
+                    // utterThis.voice = synth
+                    //   .getVoices()
+                    //   .find(
+                    //     item => item.voiceURI === 'Google UK English Female',
+                    //   );
+                    synth.speak(utterThis);
+
+                    // googleTTS('Hello World', 'en', 1).then(function(url) {
+                    //   alert(url);
+                    // });
+                  }}>
+                  Say it
+                </button>
               </p>
             </div>
           )}
