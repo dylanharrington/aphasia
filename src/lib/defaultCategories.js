@@ -1,27 +1,12 @@
 /**
- * AAC Categories Configuration
- *
- * Each category has:
- * - id: unique identifier
- * - label: display text and what gets spoken for the action
- * - icon: emoji icon (or image path)
- * - items: array of selectable items
- *
- * Each item has:
- * - id: unique identifier
- * - label: what gets displayed and spoken
- * - icon: emoji icon (or image path for custom items like people)
- *
- * To customize for a specific user:
- * 1. Edit the "people" category with their family/friends
- * 2. Add/remove items from any category
- * 3. Change labels to match their vocabulary
+ * Default AAC Categories
+ * Used for guest mode and as initial data for new users
  */
 
-const categories = [
+const defaultCategories = [
   {
     id: 'responses',
-    label: '',  // Empty because responses are standalone (just "Yes", not "Response Yes")
+    label: '',
     icon: '💬',
     items: [
       { id: 'yes', label: 'Yes', icon: '✅' },
@@ -109,15 +94,11 @@ const categories = [
     id: 'people',
     label: 'Talk to',
     icon: '👥',
-    // Add your own people here with their photos
-    // Example: { id: 'mom', label: 'Mom', icon: '👩', image: require('./images/mom.png') }
     items: [
       { id: 'family', label: 'family', icon: '👨‍👩‍👧‍👦' },
       { id: 'doctor', label: 'the doctor', icon: '👨‍⚕️' },
       { id: 'nurse', label: 'the nurse', icon: '👩‍⚕️' },
       { id: 'friend', label: 'a friend', icon: '🧑‍🤝‍🧑' },
-      // Add custom people with photos:
-      // { id: 'john', label: 'John', image: require('./images/john.png') },
     ],
   },
   {
@@ -134,4 +115,4 @@ const categories = [
   },
 ];
 
-export default categories;
+export default defaultCategories;

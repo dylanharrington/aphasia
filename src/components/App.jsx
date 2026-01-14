@@ -1,48 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import categories from './categories';
-import './App.css';
+import React, { useState } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from './auth/AuthProvider';
+import { AuthModal } from './auth/LoginForm';
+import { useCategories } from '../hooks/useCategories';
+import { useSpeech } from '../hooks/useSpeech';
+import Editor from './editor/Editor';
+import '../styles/app.css';
 
-function App() {
+function MainApp() {
+  const { user, signOut, isConfigured } = useAuth();
+  const { categories, loading } = useCategories();
+  const { voices, selectedVoice, rate, setRate, selectVoice, speak } = useSpeech();
+  const navigate = useNavigate();
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [voices, setVoices] = useState([]);
-  const [selectedVoice, setSelectedVoice] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
-
-  // Load available voices
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices();
-      if (availableVoices.length > 0) {
-        setVoices(availableVoices);
-        // Try to find a good default voice
-        const preferredVoice = availableVoices.find(
-          (v) => v.lang.startsWith('en') && v.name.toLowerCase().includes('female')
-        ) || availableVoices.find((v) => v.lang.startsWith('en')) || availableVoices[0];
-        setSelectedVoice(preferredVoice);
-      }
-    };
-
-    loadVoices();
-    // Chrome loads voices asynchronously
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-
-    return () => {
-      window.speechSynthesis.onvoiceschanged = null;
-    };
-  }, []);
-
-  const speak = useCallback((text) => {
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
-    utterance.rate = 0.9; // Slightly slower for clarity
-    window.speechSynthesis.speak(utterance);
-  }, [selectedVoice]);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -51,7 +25,6 @@ function App() {
 
   const handleItemSelect = (item) => {
     setSelectedItem(item);
-    // Construct the phrase
     const phrase = selectedCategory.label
       ? `${selectedCategory.label} ${item.label}`
       : item.label;
@@ -80,7 +53,7 @@ function App() {
     }
   };
 
-  // Render category grid
+  // Category grid
   const renderCategories = () => (
     <div className="grid">
       {categories.map((category) => (
@@ -99,7 +72,7 @@ function App() {
     </div>
   );
 
-  // Render items within a category
+  // Items grid
   const renderItems = () => (
     <div className="grid">
       {selectedCategory.items.map((item) => (
@@ -122,7 +95,7 @@ function App() {
     </div>
   );
 
-  // Render the confirmation/speak again view
+  // Confirmation view
   const renderConfirmation = () => {
     const phrase = selectedCategory.label
       ? `${selectedCategory.label} ${selectedItem.label}`
@@ -146,7 +119,7 @@ function App() {
     );
   };
 
-  // Render settings panel
+  // Settings panel
   const renderSettings = () => (
     <div className="settings-panel">
       <h2>Voice Settings</h2>
@@ -154,10 +127,7 @@ function App() {
       <select
         id="voice-select"
         value={selectedVoice?.name || ''}
-        onChange={(e) => {
-          const voice = voices.find((v) => v.name === e.target.value);
-          setSelectedVoice(voice);
-        }}
+        onChange={(e) => selectVoice(e.target.value)}
       >
         {voices.map((voice) => (
           <option key={voice.name} value={voice.name}>
@@ -165,6 +135,19 @@ function App() {
           </option>
         ))}
       </select>
+
+      <label htmlFor="rate-slider">Speech Speed:</label>
+      <input
+        id="rate-slider"
+        type="range"
+        min="0.5"
+        max="1.5"
+        step="0.1"
+        value={rate}
+        onChange={(e) => setRate(parseFloat(e.target.value))}
+      />
+      <span className="rate-value">{rate.toFixed(1)}x</span>
+
       <button className="test-voice" onClick={() => speak('Hello, this is a test.')}>
         Test Voice
       </button>
@@ -174,26 +157,69 @@ function App() {
     </div>
   );
 
+  if (loading) {
+    return (
+      <div className="app">
+        <div className="loading">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <header className="header">
-        {selectedCategory && (
-          <button className="nav-button" onClick={handleBack} aria-label="Go back">
-            <span role="img" aria-hidden="true">←</span>
-          </button>
-        )}
+        <div className="header-left">
+          {selectedCategory && (
+            <button className="nav-button" onClick={handleBack} aria-label="Go back">
+              <span role="img" aria-hidden="true">←</span>
+            </button>
+          )}
+        </div>
+
         <h1 className="title">
           {selectedCategory ? (selectedCategory.label || selectedCategory.id) : 'SpeakEasy'}
         </h1>
+
         <div className="header-actions">
           {selectedCategory && (
             <button className="nav-button" onClick={handleHome} aria-label="Go home">
               <span role="img" aria-hidden="true">🏠</span>
             </button>
           )}
-          <button className="nav-button" onClick={() => setShowSettings(!showSettings)} aria-label="Settings">
+          <button
+            className="nav-button"
+            onClick={() => setShowSettings(!showSettings)}
+            aria-label="Settings"
+          >
             <span role="img" aria-hidden="true">⚙️</span>
           </button>
+          {user ? (
+            <>
+              <button
+                className="nav-button"
+                onClick={() => navigate('/editor')}
+                aria-label="Edit categories"
+              >
+                <span role="img" aria-hidden="true">✏️</span>
+              </button>
+              <button
+                className="nav-button user-button"
+                onClick={signOut}
+                aria-label="Sign out"
+                title={user.email}
+              >
+                <span role="img" aria-hidden="true">👤</span>
+              </button>
+            </>
+          ) : isConfigured ? (
+            <button
+              className="nav-button"
+              onClick={() => setShowAuthModal(true)}
+              aria-label="Sign in"
+            >
+              <span role="img" aria-hidden="true">🔑</span>
+            </button>
+          ) : null}
         </div>
       </header>
 
@@ -206,8 +232,17 @@ function App() {
 
         {!showSettings && selectedCategory && selectedItem && renderConfirmation()}
       </main>
+
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<MainApp />} />
+      <Route path="/editor/*" element={<Editor />} />
+    </Routes>
+  );
+}

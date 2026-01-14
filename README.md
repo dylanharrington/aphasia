@@ -13,92 +13,92 @@ A simple communication aid for people with aphasia, stroke recovery, or other co
 
 - Large, easy-to-tap buttons designed for accessibility
 - Uses emoji icons (no images needed for basic use)
-- Voice selection in settings
+- Voice selection and speed control in settings
 - Works on phones, tablets, and computers
 - Can be installed as an app on mobile devices (PWA)
-- Works offline once loaded
+- **Optional cloud sync** - Sign up to save customizations across devices
+- **Built-in editor** - Customize categories and items (requires account)
 
 ## Quick Start
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view it.
 
-## Customizing for Your Loved One
+## Guest Mode vs. Signed In
 
-The main file to edit is `src/categories.js`. This contains all the categories and items.
+**Guest Mode (no account needed):**
+- Full AAC functionality works immediately
+- Settings saved locally on your device
+- Default categories available
 
-### Adding Custom People with Photos
+**With Account:**
+- Customize categories and items via the Editor
+- Upload custom photos for people
+- Sync across all your devices
+- Settings backed up to the cloud
 
-1. Add photos to the `src/images/` folder (PNG or JPG)
-2. Edit `src/categories.js` and find the `people` category
-3. Add entries like this:
+## Setting Up Cloud Sync (Optional)
 
-```javascript
-{
-  id: 'people',
-  label: 'Talk to',
-  icon: '👥',
-  items: [
-    { id: 'mom', label: 'Mom', image: require('./images/mom.png') },
-    { id: 'dad', label: 'Dad', image: require('./images/dad.png') },
-    { id: 'doctor', label: 'the doctor', icon: '👨‍⚕️' },
-    // ... more people
-  ],
-}
-```
+To enable accounts and cloud sync:
 
-### Adding or Modifying Categories
+1. Create a free [Supabase](https://supabase.com) project
+2. Run the SQL from `supabase-schema.sql` in your Supabase SQL Editor
+3. Copy your project URL and anon key from Settings > API
+4. Create `.env.local`:
+   ```
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_ANON_KEY=your-anon-key
+   ```
+5. Restart the dev server
 
-Each category has:
-- `id` - A unique identifier
-- `label` - What gets spoken before the item (e.g., "I need" + "water" = "I need water")
-- `icon` - An emoji shown on the category button
-- `items` - Array of selectable items
+## Deploying to Vercel
 
-Each item has:
-- `id` - A unique identifier
-- `label` - What gets displayed and spoken
-- `icon` - An emoji (or `image` for a photo path)
+1. Push to GitHub
+2. Import project in [Vercel](https://vercel.com)
+3. Add environment variables (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)
+4. Deploy
 
-### Example: Adding a "Pain" Category
+The app works without Supabase configured - users just won't see login/editor options.
 
-```javascript
-{
-  id: 'pain',
-  label: 'My',
-  icon: '🩹',
-  items: [
-    { id: 'head', label: 'head hurts', icon: '🤕' },
-    { id: 'stomach', label: 'stomach hurts', icon: '🤢' },
-    { id: 'back', label: 'back hurts', icon: '😣' },
-    { id: 'legs', label: 'legs hurt', icon: '🦵' },
-  ],
-}
-```
+## Local Customization (Without Account)
 
-## Deployment
+Edit `src/lib/defaultCategories.js` to change the default categories for all users.
 
-To create a production build:
+## Tech Stack
 
-```bash
-npm run build
-```
-
-The `build` folder can be deployed to any static hosting service like GitHub Pages, Netlify, or Vercel.
+- **React 18** with Vite (fast builds, minimal dependencies)
+- **Supabase** for auth and database (optional)
+- **Web Speech API** for text-to-speech
 
 ## Accessibility
 
-This app is designed with accessibility in mind:
-- Large touch targets (minimum 120px)
-- High contrast colors
-- Supports reduced motion preferences
-- Supports high contrast mode
-- Screen reader friendly with proper ARIA labels
+- Large touch targets (140px+ buttons)
+- High contrast dark theme
+- Supports `prefers-reduced-motion`
+- Supports `prefers-contrast: high`
+- Screen reader friendly with ARIA labels
 - Keyboard navigable
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── App.jsx           # Main AAC interface
+│   ├── auth/             # Login/signup components
+│   └── editor/           # Customization UI
+├── hooks/
+│   ├── useCategories.jsx # Data management
+│   └── useSpeech.js      # Text-to-speech
+├── lib/
+│   ├── supabase.js       # Database client
+│   └── defaultCategories.js
+└── styles/
+```
 
 ## Background
 
