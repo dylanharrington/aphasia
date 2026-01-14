@@ -1,68 +1,343 @@
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+}
+
 body {
-  background: #222;
-  color: white;
-  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-.App {
-  width: 100%;
+/* App container */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.Container {
-  margin-top: 20px;
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.Container > div {
-  width: 100%;
-}
-
-.Container > div > p{
-  padding: 20px;
-  font-size: 2em;
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  flex: 1;
   text-align: center;
 }
-.Container > div > p > button {
-  margin: 10px 0;
-  padding-top: 10px;
-  border: 0;
-  font-size: 2em;
-  background: #333;
-  display: block;
-  width: 100%;
-  text-align: center;
-}
 
-.App--top {
+.nav-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
-  font-size: 2em;
-  padding: 12px;
-  line-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
 }
 
-.App--item {
-  display: inline-block;
-  text-align: center;
-  position: relative;
-  border: 1px solid #333;
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-button:active {
+  transform: scale(0.95);
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Main content */
+.main {
+  flex: 1;
+  padding: 1rem;
+}
+
+/* Grid layout for cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* Card buttons */
+.card {
+  background: linear-gradient(145deg, #2d2d44 0%, #1f1f2e 100%);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.25rem 1rem;
   cursor: pointer;
-  line-height: 42px;
-  padding: 12px;
-  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  min-height: 140px;
+  justify-content: center;
 }
 
-
-.App--item > img {
-  /* position: absolute; */
-  width: 100px;
-  /* left: 0; */
-  /* top: 0; */
+.card:hover {
+  background: linear-gradient(145deg, #3d3d54 0%, #2a2a3e 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
-.App--item > img + span{
+.card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.card.selected {
+  border-color: #4ade80;
+  background: linear-gradient(145deg, #2d4d3a 0%, #1f2f2e 100%);
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+}
+
+.card-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.card-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.card-label {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  color: #fff;
+  word-break: break-word;
+}
+
+/* Confirmation view */
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.phrase {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.confirmation-icon {
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.confirmation-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.speak-button {
+  background: linear-gradient(145deg, #4ade80 0%, #22c55e 100%);
+  border: none;
+  border-radius: 16px;
+  color: #000;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 1.25rem 2.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(74, 222, 128, 0.4);
+}
+
+.speak-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 222, 128, 0.5);
+}
+
+.speak-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.speak-button span:first-child {
+  font-size: 1.5rem;
+}
+
+/* Settings panel */
+.settings-panel {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.settings-panel h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.settings-panel label {
   display: block;
-  /* margin-left: 76px; */
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.selected {
-  color: salmon;
+.settings-panel select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.settings-panel select option {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+.test-voice,
+.close-settings {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+
+.test-voice {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.test-voice:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.close-settings {
+  background: #4ade80;
+  color: #000;
+}
+
+.close-settings:hover {
+  background: #22c55e;
+}
+
+/* Focus states for accessibility */
+.card:focus,
+.nav-button:focus,
+.speak-button:focus,
+.test-voice:focus,
+.close-settings:focus {
+  outline: 3px solid #4ade80;
+  outline-offset: 2px;
+}
+
+/* Larger touch targets on mobile */
+@media (max-width: 480px) {
+  html {
+    font-size: 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    min-height: 120px;
+    padding: 1rem;
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+  }
+
+  .phrase {
+    font-size: 1.5rem;
+  }
+
+  .confirmation-icon {
+    font-size: 4rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 3px;
+  }
+
+  .card.selected {
+    border-color: #fff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .nav-button,
+  .speak-button {
+    transition: none;
+  }
+
+  .card:hover,
+  .speak-button:hover {
+    transform: none;
+  }
 }

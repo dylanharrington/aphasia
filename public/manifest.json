@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SpeakEasy",
+  "name": "SpeakEasy AAC - Communication Aid",
+  "description": "A simple communication aid for people with aphasia and speech difficulties",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,8 +9,8 @@
       "type": "image/x-icon"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#1a1a2e",
+  "background_color": "#1a1a2e"
 }

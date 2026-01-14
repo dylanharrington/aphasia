@@ -1,23 +1,28 @@
 {
-  "name": "aphasia",
-  "version": "0.1.0",
+  "name": "speakeasy-aac",
+  "version": "1.0.0",
+  "description": "A simple AAC (Augmentative and Alternative Communication) app to help people with aphasia communicate",
   "private": true,
   "dependencies": {
-    "classnames": "^2.2.5",
-    "eslint-plugin-prettier": "^2.3.1",
-    "eslint_d": "^5.2.0",
-    "flow-bin": "^0.59.0",
-    "google-tts-api": "^0.0.2",
-    "prettier": "^1.8.2",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1",
-    "react-scripts": "1.0.17"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "flow": "flow"
+    "test": "react-scripts test"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
