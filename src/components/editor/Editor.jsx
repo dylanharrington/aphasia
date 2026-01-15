@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider';
 import { useCategories } from '../../hooks/useCategories';
@@ -16,6 +16,8 @@ export default function Editor() {
     addItem,
     updateItem,
     deleteItem,
+    reorderCategories,
+    reorderItems,
     resetToDefaults,
   } = useCategories();
 
@@ -29,7 +31,76 @@ export default function Editor() {
   const [editCategoryIcon, setEditCategoryIcon] = useState('');
   const [editItemIcon, setEditItemIcon] = useState('');
 
+  // Drag state
+  const [draggedCategoryIndex, setDraggedCategoryIndex] = useState(null);
+  const [draggedItemIndex, setDraggedItemIndex] = useState(null);
+  const [dragOverIndex, setDragOverIndex] = useState(null);
+
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId);
+
+  // Category drag handlers
+  const handleCategoryDragStart = (e, index) => {
+    setDraggedCategoryIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.target.classList.add('dragging');
+  };
+
+  const handleCategoryDragEnd = (e) => {
+    e.target.classList.remove('dragging');
+    setDraggedCategoryIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleCategoryDragOver = (e, index) => {
+    e.preventDefault();
+    if (draggedCategoryIndex === null || draggedCategoryIndex === index) return;
+    setDragOverIndex(index);
+  };
+
+  const handleCategoryDrop = (e, index) => {
+    e.preventDefault();
+    if (draggedCategoryIndex === null || draggedCategoryIndex === index) return;
+
+    const newCategories = [...categories];
+    const [dragged] = newCategories.splice(draggedCategoryIndex, 1);
+    newCategories.splice(index, 0, dragged);
+    reorderCategories(newCategories);
+
+    setDraggedCategoryIndex(null);
+    setDragOverIndex(null);
+  };
+
+  // Item drag handlers
+  const handleItemDragStart = (e, index) => {
+    setDraggedItemIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.target.classList.add('dragging');
+  };
+
+  const handleItemDragEnd = (e) => {
+    e.target.classList.remove('dragging');
+    setDraggedItemIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleItemDragOver = (e, index) => {
+    e.preventDefault();
+    if (draggedItemIndex === null || draggedItemIndex === index) return;
+    setDragOverIndex(index);
+  };
+
+  const handleItemDrop = (e, index) => {
+    e.preventDefault();
+    if (draggedItemIndex === null || draggedItemIndex === index) return;
+
+    const newItems = [...selectedCategory.items];
+    const [dragged] = newItems.splice(draggedItemIndex, 1);
+    newItems.splice(index, 0, dragged);
+    reorderItems(selectedCategoryId, newItems);
+
+    setDraggedItemIndex(null);
+    setDragOverIndex(null);
+  };
 
   // Redirect if not logged in
   if (!user) {
@@ -144,11 +215,17 @@ export default function Editor() {
           </div>
 
           <ul className="category-list">
-            {categories.map((cat) => (
+            {categories.map((cat, index) => (
               <li
                 key={cat.id}
-                className={`category-item ${selectedCategoryId === cat.id ? 'selected' : ''}`}
+                className={`category-item ${selectedCategoryId === cat.id ? 'selected' : ''} ${dragOverIndex === index && draggedCategoryIndex !== null ? 'drag-over' : ''}`}
+                draggable
+                onDragStart={(e) => handleCategoryDragStart(e, index)}
+                onDragEnd={handleCategoryDragEnd}
+                onDragOver={(e) => handleCategoryDragOver(e, index)}
+                onDrop={(e) => handleCategoryDrop(e, index)}
               >
+                <span className="drag-handle" title="Drag to reorder">⋮⋮</span>
                 <button
                   className="category-select"
                   onClick={() => setSelectedCategoryId(cat.id)}
@@ -232,8 +309,17 @@ export default function Editor() {
               </div>
 
               <ul className="items-list">
-                {selectedCategory.items.map((item) => (
-                  <li key={item.id} className="item-row">
+                {selectedCategory.items.map((item, index) => (
+                  <li
+                    key={item.id}
+                    className={`item-row ${dragOverIndex === index && draggedItemIndex !== null ? 'drag-over' : ''}`}
+                    draggable
+                    onDragStart={(e) => handleItemDragStart(e, index)}
+                    onDragEnd={handleItemDragEnd}
+                    onDragOver={(e) => handleItemDragOver(e, index)}
+                    onDrop={(e) => handleItemDrop(e, index)}
+                  >
+                    <span className="drag-handle" title="Drag to reorder">⋮⋮</span>
                     <span className="item-icon">{item.icon}</span>
                     <span className="item-label">{item.label}</span>
                     <div className="item-actions">

@@ -320,13 +320,25 @@ export function CategoriesProvider({ children }) {
   }, [user, categories]);
 
   const reorderCategories = useCallback(async (newOrder) => {
-    // TODO: Implement reordering
     setCategories(newOrder);
-    if (!user) saveToLocalStorage(newOrder);
+
+    if (user && supabase) {
+      // Update sort_order for each category in Supabase
+      for (let i = 0; i < newOrder.length; i++) {
+        const cat = newOrder[i];
+        if (cat.dbId) {
+          await supabase
+            .from('categories')
+            .update({ sort_order: i })
+            .eq('id', cat.dbId);
+        }
+      }
+    } else {
+      saveToLocalStorage(newOrder);
+    }
   }, [user]);
 
   const reorderItems = useCallback(async (categoryId, newItems) => {
-    // TODO: Implement reordering
     setCategories((prev) => {
       const updated = prev.map((c) =>
         c.id === categoryId ? { ...c, items: newItems } : c
@@ -334,6 +346,19 @@ export function CategoriesProvider({ children }) {
       if (!user) saveToLocalStorage(updated);
       return updated;
     });
+
+    if (user && supabase) {
+      // Update sort_order for each item in Supabase
+      for (let i = 0; i < newItems.length; i++) {
+        const item = newItems[i];
+        if (item.dbId) {
+          await supabase
+            .from('items')
+            .update({ sort_order: i })
+            .eq('id', item.dbId);
+        }
+      }
+    }
   }, [user]);
 
   const resetToDefaults = useCallback(async () => {
