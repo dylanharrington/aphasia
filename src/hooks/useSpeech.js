@@ -2,6 +2,21 @@ import { useState, useEffect, useCallback } from 'react';
 
 const STORAGE_KEY = 'speakeasy-voice-settings';
 
+// Filter out novelty/joke voices that aren't suitable for AAC
+const EXCLUDED_VOICES = [
+  'Albert', 'Bad News', 'Bahh', 'Bells', 'Boing', 'Bubbles', 'Cellos',
+  'Deranged', 'Good News', 'Hysterical', 'Jester', 'Organ', 'Superstar',
+  'Trinoids', 'Whisper', 'Wobble', 'Zarvox', 'Ralph', 'Kathy',
+  'Junior', 'Fred', 'Pipe Organ', 'Princess'
+];
+
+const isUsableVoice = (voice) => {
+  const name = voice.name;
+  return !EXCLUDED_VOICES.some((excluded) =>
+    name.toLowerCase().includes(excluded.toLowerCase())
+  );
+};
+
 export function useSpeech() {
   const [voices, setVoices] = useState([]);
   const [selectedVoice, setSelectedVoice] = useState(null);
@@ -10,7 +25,8 @@ export function useSpeech() {
   // Load voices
   useEffect(() => {
     const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices();
+      const allVoices = window.speechSynthesis.getVoices();
+      const availableVoices = allVoices.filter(isUsableVoice);
       if (availableVoices.length > 0) {
         setVoices(availableVoices);
 
