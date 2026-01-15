@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider';
 import { useCategories } from '../../hooks/useCategories';
+import { EmojiInput } from './EmojiPicker';
 import '../../styles/editor.css';
 
 export default function Editor() {
@@ -23,6 +24,10 @@ export default function Editor() {
   const [editingItem, setEditingItem] = useState(null);
   const [showNewCategory, setShowNewCategory] = useState(false);
   const [showNewItem, setShowNewItem] = useState(false);
+  const [newCategoryIcon, setNewCategoryIcon] = useState('');
+  const [newItemIcon, setNewItemIcon] = useState('');
+  const [editCategoryIcon, setEditCategoryIcon] = useState('');
+  const [editItemIcon, setEditItemIcon] = useState('');
 
   const selectedCategory = categories.find((c) => c.id === selectedCategoryId);
 
@@ -50,10 +55,11 @@ export default function Editor() {
     const newCategory = {
       id: formData.get('id').toLowerCase().replace(/\s+/g, '-'),
       label: formData.get('label'),
-      icon: formData.get('icon'),
+      icon: newCategoryIcon,
     };
     await addCategory(newCategory);
     setShowNewCategory(false);
+    setNewCategoryIcon('');
     e.target.reset();
   };
 
@@ -62,9 +68,10 @@ export default function Editor() {
     const formData = new FormData(e.target);
     await updateCategory(editingCategory.id, {
       label: formData.get('label'),
-      icon: formData.get('icon'),
+      icon: editCategoryIcon || editingCategory.icon,
     });
     setEditingCategory(null);
+    setEditCategoryIcon('');
   };
 
   const handleDeleteCategory = async (categoryId) => {
@@ -82,10 +89,11 @@ export default function Editor() {
     const newItem = {
       id: formData.get('id').toLowerCase().replace(/\s+/g, '-'),
       label: formData.get('label'),
-      icon: formData.get('icon'),
+      icon: newItemIcon,
     };
     await addItem(selectedCategoryId, newItem);
     setShowNewItem(false);
+    setNewItemIcon('');
     e.target.reset();
   };
 
@@ -94,9 +102,10 @@ export default function Editor() {
     const formData = new FormData(e.target);
     await updateItem(selectedCategoryId, editingItem.id, {
       label: formData.get('label'),
-      icon: formData.get('icon'),
+      icon: editItemIcon || editingItem.icon,
     });
     setEditingItem(null);
+    setEditItemIcon('');
   };
 
   const handleDeleteItem = async (itemId) => {
@@ -162,12 +171,16 @@ export default function Editor() {
           {/* New Category Form */}
           {showNewCategory && (
             <form className="inline-form" onSubmit={handleAddCategory}>
-              <input name="icon" placeholder="Icon (emoji)" required maxLength={2} />
+              <EmojiInput
+                value={newCategoryIcon}
+                onChange={setNewCategoryIcon}
+                placeholder="Choose icon"
+              />
               <input name="label" placeholder="Label (e.g., 'I want')" required />
               <input name="id" placeholder="ID (e.g., 'wants')" required />
               <div className="form-actions">
-                <button type="submit">Add</button>
-                <button type="button" onClick={() => setShowNewCategory(false)}>
+                <button type="submit" disabled={!newCategoryIcon}>Add</button>
+                <button type="button" onClick={() => { setShowNewCategory(false); setNewCategoryIcon(''); }}>
                   Cancel
                 </button>
               </div>
@@ -176,18 +189,17 @@ export default function Editor() {
 
           {/* Edit Category Form */}
           {editingCategory && (
-            <div className="modal-overlay" onClick={() => setEditingCategory(null)}>
+            <div className="modal-overlay" onClick={() => { setEditingCategory(null); setEditCategoryIcon(''); }}>
               <form
                 className="modal-form"
                 onSubmit={handleUpdateCategory}
                 onClick={(e) => e.stopPropagation()}
               >
                 <h3>Edit Category</h3>
-                <input
-                  name="icon"
-                  defaultValue={editingCategory.icon}
-                  placeholder="Icon"
-                  required
+                <EmojiInput
+                  value={editCategoryIcon || editingCategory.icon}
+                  onChange={setEditCategoryIcon}
+                  placeholder="Choose icon"
                 />
                 <input
                   name="label"
@@ -197,7 +209,7 @@ export default function Editor() {
                 />
                 <div className="form-actions">
                   <button type="submit">Save</button>
-                  <button type="button" onClick={() => setEditingCategory(null)}>
+                  <button type="button" onClick={() => { setEditingCategory(null); setEditCategoryIcon(''); }}>
                     Cancel
                   </button>
                 </div>
@@ -243,12 +255,16 @@ export default function Editor() {
               {/* New Item Form */}
               {showNewItem && (
                 <form className="inline-form" onSubmit={handleAddItem}>
-                  <input name="icon" placeholder="Icon (emoji)" required maxLength={2} />
+                  <EmojiInput
+                    value={newItemIcon}
+                    onChange={setNewItemIcon}
+                    placeholder="Choose icon"
+                  />
                   <input name="label" placeholder="Label" required />
                   <input name="id" placeholder="ID" required />
                   <div className="form-actions">
-                    <button type="submit">Add</button>
-                    <button type="button" onClick={() => setShowNewItem(false)}>
+                    <button type="submit" disabled={!newItemIcon}>Add</button>
+                    <button type="button" onClick={() => { setShowNewItem(false); setNewItemIcon(''); }}>
                       Cancel
                     </button>
                   </div>
@@ -257,18 +273,17 @@ export default function Editor() {
 
               {/* Edit Item Modal */}
               {editingItem && (
-                <div className="modal-overlay" onClick={() => setEditingItem(null)}>
+                <div className="modal-overlay" onClick={() => { setEditingItem(null); setEditItemIcon(''); }}>
                   <form
                     className="modal-form"
                     onSubmit={handleUpdateItem}
                     onClick={(e) => e.stopPropagation()}
                   >
                     <h3>Edit Item</h3>
-                    <input
-                      name="icon"
-                      defaultValue={editingItem.icon}
-                      placeholder="Icon"
-                      required
+                    <EmojiInput
+                      value={editItemIcon || editingItem.icon}
+                      onChange={setEditItemIcon}
+                      placeholder="Choose icon"
                     />
                     <input
                       name="label"
@@ -278,7 +293,7 @@ export default function Editor() {
                     />
                     <div className="form-actions">
                       <button type="submit">Save</button>
-                      <button type="button" onClick={() => setEditingItem(null)}>
+                      <button type="button" onClick={() => { setEditingItem(null); setEditItemIcon(''); }}>
                         Cancel
                       </button>
                     </div>
