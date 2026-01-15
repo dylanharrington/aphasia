@@ -8,6 +8,48 @@ import Editor from './editor/Editor';
 import About from './About';
 import '../styles/app.css';
 
+// Simple line icons as SVG components
+const Icons = {
+  home: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+  ),
+  info: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="16" x2="12" y2="12"/>
+      <line x1="12" y1="8" x2="12.01" y2="8"/>
+    </svg>
+  ),
+  settings: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  ),
+  edit: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>
+  ),
+  user: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+  ),
+  signIn: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+      <polyline points="10 17 15 12 10 7"/>
+      <line x1="15" y1="12" x2="3" y2="12"/>
+    </svg>
+  ),
+};
+
 function MainApp() {
   const { user, signOut, isConfigured } = useAuth();
   const { categories, loading } = useCategories();
@@ -194,7 +236,7 @@ function MainApp() {
               aria-label="Go home"
               title="Home"
             >
-              <span role="img" aria-hidden="true">🏠</span>
+              {Icons.home}
             </button>
           )}
           <button
@@ -203,7 +245,7 @@ function MainApp() {
             aria-label="About this app"
             title="About"
           >
-            <span role="img" aria-hidden="true">ℹ️</span>
+            {Icons.info}
           </button>
           <button
             className="nav-button"
@@ -211,7 +253,7 @@ function MainApp() {
             aria-label="Voice settings"
             title="Voice Settings"
           >
-            <span role="img" aria-hidden="true">⚙️</span>
+            {Icons.settings}
           </button>
           {user ? (
             <>
@@ -221,7 +263,7 @@ function MainApp() {
                 aria-label="Edit categories"
                 title="Edit Categories"
               >
-                <span role="img" aria-hidden="true">✏️</span>
+                {Icons.edit}
               </button>
               <button
                 className="nav-button user-button"
@@ -233,7 +275,7 @@ function MainApp() {
                 aria-label="Sign out"
                 title={`Sign out (${user.email})`}
               >
-                <span role="img" aria-hidden="true">👤</span>
+                {Icons.user}
               </button>
             </>
           ) : isConfigured ? (
@@ -243,7 +285,7 @@ function MainApp() {
               aria-label="Sign in"
               title="Sign In"
             >
-              <span role="img" aria-hidden="true">🔑</span>
+              {Icons.signIn}
             </button>
           ) : null}
         </div>
