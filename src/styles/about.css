@@ -1,0 +1,102 @@
+/* About Page */
+.about {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.about-header .back-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.about-header .back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.about-content {
+  flex: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.about-section {
+  margin-bottom: 2.5rem;
+}
+
+.about-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #4ade80;
+}
+
+.about-section p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.about-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-section li {
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.about-section li::before {
+  content: "•";
+  color: #4ade80;
+  position: absolute;
+  left: 0;
+}
+
+.about-section a {
+  color: #4ade80;
+  text-decoration: underline;
+}
+
+.about-section a:hover {
+  color: #22c55e;
+}
+
+.about-section strong {
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .about-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .about-section h2 {
+    font-size: 1.1rem;
+  }
+}

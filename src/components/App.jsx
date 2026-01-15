@@ -5,6 +5,7 @@ import { AuthModal } from './auth/LoginForm';
 import { useCategories } from '../hooks/useCategories';
 import { useSpeech } from '../hooks/useSpeech';
 import Editor from './editor/Editor';
+import About from './About';
 import '../styles/app.css';
 
 function MainApp() {
@@ -170,7 +171,12 @@ function MainApp() {
       <header className="header">
         <div className="header-left">
           {selectedCategory && (
-            <button className="nav-button" onClick={handleBack} aria-label="Go back">
+            <button
+              className="nav-button"
+              onClick={handleBack}
+              aria-label="Go back"
+              title="Back"
+            >
               <span role="img" aria-hidden="true">←</span>
             </button>
           )}
@@ -182,14 +188,28 @@ function MainApp() {
 
         <div className="header-actions">
           {selectedCategory && (
-            <button className="nav-button" onClick={handleHome} aria-label="Go home">
+            <button
+              className="nav-button"
+              onClick={handleHome}
+              aria-label="Go home"
+              title="Home"
+            >
               <span role="img" aria-hidden="true">🏠</span>
             </button>
           )}
           <button
             className="nav-button"
+            onClick={() => navigate('/about')}
+            aria-label="About this app"
+            title="About"
+          >
+            <span role="img" aria-hidden="true">ℹ️</span>
+          </button>
+          <button
+            className="nav-button"
             onClick={() => setShowSettings(!showSettings)}
-            aria-label="Settings"
+            aria-label="Voice settings"
+            title="Voice Settings"
           >
             <span role="img" aria-hidden="true">⚙️</span>
           </button>
@@ -199,14 +219,19 @@ function MainApp() {
                 className="nav-button"
                 onClick={() => navigate('/editor')}
                 aria-label="Edit categories"
+                title="Edit Categories"
               >
                 <span role="img" aria-hidden="true">✏️</span>
               </button>
               <button
                 className="nav-button user-button"
-                onClick={signOut}
+                onClick={() => {
+                  if (window.confirm('Sign out?')) {
+                    signOut();
+                  }
+                }}
                 aria-label="Sign out"
-                title={user.email}
+                title={`Sign out (${user.email})`}
               >
                 <span role="img" aria-hidden="true">👤</span>
               </button>
@@ -216,6 +241,7 @@ function MainApp() {
               className="nav-button"
               onClick={() => setShowAuthModal(true)}
               aria-label="Sign in"
+              title="Sign In"
             >
               <span role="img" aria-hidden="true">🔑</span>
             </button>
@@ -242,6 +268,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<MainApp />} />
+      <Route path="/about" element={<About />} />
       <Route path="/editor/*" element={<Editor />} />
     </Routes>
   );
