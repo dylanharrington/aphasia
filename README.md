@@ -1,6 +1,13 @@
 # SpeakEasy AAC
 
-A simple communication aid for people with aphasia, stroke recovery, or other conditions that affect speech. Users tap pictures organized in categories to build phrases that are spoken aloud.
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://aphasia-alpha.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-18-61dafb)](https://reactjs.org/)
+[![PWA Ready](https://img.shields.io/badge/PWA-ready-purple)](https://web.dev/progressive-web-apps/)
+
+A free, open-source communication aid (AAC app) for people with aphasia, stroke recovery, ALS, or other conditions that affect speech. Users tap pictures organized in categories to build phrases that are spoken aloud.
+
+**[Try the Live Demo](https://aphasia-alpha.vercel.app)**
 
 ## How It Works
 
@@ -17,7 +24,8 @@ A simple communication aid for people with aphasia, stroke recovery, or other co
 - Works on phones, tablets, and computers
 - Can be installed as an app on mobile devices (PWA)
 - **Optional cloud sync** - Sign up to save customizations across devices
-- **Built-in editor** - Customize categories and items (requires account)
+- **Built-in editor** - Customize categories and items with an emoji picker (requires account)
+- **About page** - Learn about the app and who it's for
 
 ## Quick Start
 
@@ -37,6 +45,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it.
 
 **With Account:**
 - Customize categories and items via the Editor
+- Visual emoji picker for choosing icons
 - Upload custom photos for people
 - Sync across all your devices
 - Settings backed up to the cloud
