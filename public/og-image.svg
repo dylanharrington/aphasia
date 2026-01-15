@@ -1,0 +1,32 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Speech bubble icon -->
+  <g transform="translate(500, 120)">
+    <ellipse cx="100" cy="80" rx="90" ry="70" fill="#4ade80"/>
+    <polygon points="60,140 100,140 70,180" fill="#4ade80"/>
+    <ellipse cx="70" cy="70" rx="10" ry="10" fill="#1a1a2e"/>
+    <ellipse cx="100" cy="70" rx="10" ry="10" fill="#1a1a2e"/>
+    <ellipse cx="130" cy="70" rx="10" ry="10" fill="#1a1a2e"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="340" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold" fill="#ffffff">SpeakEasy AAC</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="420" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="32" fill="rgba(255,255,255,0.8)">Communication Made Simple</text>
+
+  <!-- Features -->
+  <text x="600" y="520" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#4ade80">Free • Open Source • Works Offline</text>
+
+  <!-- Tagline -->
+  <text x="600" y="580" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="rgba(255,255,255,0.6)">For aphasia, stroke recovery, and speech difficulties</text>
+</svg>
