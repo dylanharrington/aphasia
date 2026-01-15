@@ -211,24 +211,21 @@ function MainApp() {
   return (
     <div className="app">
       <header className="header">
-        <div className="header-left">
-          {selectedCategory && (
-            <button
-              className="nav-button"
-              onClick={handleBack}
-              aria-label="Go back"
-              title="Back"
-            >
-              <span role="img" aria-hidden="true">←</span>
-            </button>
-          )}
-        </div>
+        <div className="header-nav">
+          <div className="header-left">
+            {selectedCategory && (
+              <button
+                className="nav-button"
+                onClick={handleBack}
+                aria-label="Go back"
+                title="Back"
+              >
+                <span role="img" aria-hidden="true">←</span>
+              </button>
+            )}
+          </div>
 
-        <h1 className="title">
-          {selectedCategory ? (selectedCategory.label || selectedCategory.id) : 'SpeakEasy'}
-        </h1>
-
-        <div className="header-actions">
+          <div className="header-actions">
           {selectedCategory && (
             <button
               className="nav-button"
@@ -288,7 +285,12 @@ function MainApp() {
               {Icons.signIn}
             </button>
           ) : null}
+          </div>
         </div>
+
+        <h1 className="title">
+          {selectedCategory ? (selectedCategory.label || selectedCategory.id) : 'SpeakEasy'}
+        </h1>
       </header>
 
       <main className="main">
