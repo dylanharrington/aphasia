@@ -289,7 +289,13 @@ function MainApp() {
         </div>
 
         <h1 className="title">
-          {selectedCategory ? (selectedCategory.label || selectedCategory.id) : 'SpeakEasy'}
+          SpeakEasy
+          {selectedCategory && (
+            <span className="title-breadcrumb">
+              <span className="title-separator">›</span>
+              {selectedCategory.label || selectedCategory.id}
+            </span>
+          )}
         </h1>
       </header>
 

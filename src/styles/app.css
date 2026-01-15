@@ -35,6 +35,15 @@
   margin: 0;
 }
 
+.title-breadcrumb {
+  font-weight: 400;
+}
+
+.title-separator {
+  margin: 0 0.5rem;
+  opacity: 0.5;
+}
+
 .nav-button {
   background: rgba(255, 255, 255, 0.1);
   border: none;
